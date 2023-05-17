@@ -3,7 +3,7 @@
 [![R-CMD-check](https://github.com/RConsortium/submissions-pilot1/workflows/R-CMD-check/badge.svg)](https://rconsortium.github.io/submissions-pilot1/)
 <!-- badges: end -->
 
-## Overview
+## Overview_
 
 The objective of the R Consortium R submission Pilot 3 Project is to expand on the work done in submission Pilot 1 by utilizing R to generate ADaM datasets.
 
