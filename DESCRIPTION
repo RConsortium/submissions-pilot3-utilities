@@ -30,7 +30,6 @@ Imports:
     tibble,
     tidyr
 Suggests:
-    envsetup,
     config,
     cowplot,
     devtools,
