@@ -4,7 +4,7 @@
 \name{pilot3-package}
 \alias{pilot3}
 \alias{pilot3-package}
-\title{pilot3: R Consortium R Submission Pilot 3}
+\title{pilot3: Utilities for the Pilot 3 Submission to the FDA}
 \description{
 R Consortium R Submission Pilot 3.
 }

@@ -1,6 +1,6 @@
 Package: pilot3
 Type: Package
-Title: R Consortium R Submission Pilot 3
+Title: Utilities for the Pilot 3 Submission to the FDA
 Version: 0.1.1
 Authors@R: c(
        person("Joel", "Laxamana-Roche", , email = "laxamana.joel@gene.com", role = c("aut", "cre")),
@@ -23,7 +23,6 @@ Description: R Consortium R Submission Pilot 3.
 Depends: R (>= 3.6.0)
 License: GPL (>= 3)
 Imports:
-    admiraldev,
     dplyr,
     emmeans,
     glue,

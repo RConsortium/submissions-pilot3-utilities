@@ -1,4 +1,3 @@
-library(admiral)
 library(metacore)
 library(metatools)
 library(lintr)
