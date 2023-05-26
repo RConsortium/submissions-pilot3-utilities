@@ -594,25 +594,6 @@
       ],
       "Hash": "057a7a9d41635ca4f9a27cbcdce6512e"
     },
-    "envsetup": {
-      "Package": "envsetup",
-      "Version": "0.0.1.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteUsername": "pharmaverse",
-      "RemoteRepo": "envsetup",
-      "RemoteRef": "main",
-      "RemoteSha": "9ae5f2141c819c1eec8bd8f4ce01d7167cb9d657",
-      "RemoteHost": "api.github.com",
-      "Requirements": [
-        "config",
-        "fs",
-        "purrr",
-        "rlang",
-        "usethis"
-      ],
-      "Hash": "3b06e3490fcfca41a7e8caff7741078e"
-    },
     "estimability": {
       "Package": "estimability",
       "Version": "1.4.1",
