@@ -1,45 +1,146 @@
-name: Check Style 🎨
+---
+name: Style
 
 on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      r-version:
+        description: 'The version of R to use'
+        default: '4.1'
+        required: false
+        type: string
   push:
-    branches: [main]
+    branches:
+      - main
+      - devel
+      - pre-release
   pull_request:
-    branches: [main, devel]
+    branches:
+      - main
+      - devel
+      - pre-release
 
 concurrency:
   group: style-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  style:
-    name: Check code style 🧑‍🎨
+  get_r_version:
+    name: Get R version
     runs-on: ubuntu-latest
     if: >
-      !contains(github.event.commits[0].message, '[skip stylecheck]')
-        && github.event.pull_request.draft == false
+      !contains(github.event.commits[0].message, '[skip style]')
+    outputs:
+      r-version: ${{ steps.normalizer.outputs.R_VERSION }}
+    steps:
+      - name: Normalize inputs
+        id: normalizer
+        run: |
+          R_VERSION="${{ inputs.r-version }}"
+          if [ "$R_VERSION" == "" ]
+          then {
+            R_VERSION="4.1"
+          }
+          fi
+          echo "R_VERSION=$R_VERSION" >> $GITHUB_OUTPUT
+        shell: bash
+  style:
+    name: Code Style
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/pharmaverse/admiralci-${{needs.get_r_version.outputs.r-version}}:latest"
+    if: >
+      !contains(github.event.commits[0].message, '[skip style]')
+    needs: get_r_version
 
     steps:
-      - uses: actions/checkout@v3
+      ##################### BEGIN boilerplate steps #####################
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v5.4
+
+      - name: Checkout repo (PR) 🛎
+        uses: actions/checkout@v3
+        if: github.event_name == 'pull_request'
         with:
-          path: ${{ github.event.repository.name }}
-          fetch-depth: 0
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        if: github.event_name != 'pull_request'
         with:
-          use-public-rspm: true
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
 
-      - name: Install styler 🖌️
-        run: install.packages(c("styler", "knitr", "roxygen2"), repos = "https://cloud.r-project.org")
-        shell: Rscript {0}
-
-      - name: Run styler 🖼️
+      - name: Normalize inputs
+        id: normalizer
         run: |
-          detect <- styler::style_pkg(dry = "on")
+          R_VERSION="${{ inputs.r-version }}"
+          if [ "$R_VERSION" == "" ]
+          then {
+            R_VERSION="4.1"
+          }
+          fi
+          echo "R_VERSION=$R_VERSION" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.staged.dependencies
+          key: staged-deps
+
+      - name: Run Staged dependencies
+        uses: insightsengineering/staged-dependencies-action@v1
+        with:
+          run-system-dependencies: false
+          renv-restore: false
+          enable-check: false
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      ##################### END boilerplate steps #####################
+
+      - name: Get changed files
+        id: changed-files
+        uses: Ana06/get-changed-files@v2.1.0
+        with:
+          format: csv
+          filter: |
+            *
+            !renv/*.R
+
+      - name: Run styler
+        run: |
+          changed_files <- unlist(strsplit(
+            "${{ steps.changed-files.outputs.all }}",
+            split=","
+          ))
+          is_r_file <- function(x) {
+              ext <- tools::file_ext(x)
+              ext %in% c("R", "Rmd", "Rnw", "Rmarkdown", "qmd")
+          }
+          changed_r_files <- Filter(is_r_file, changed_files)
+          changed_r_files <- Filter(file.exists, changed_r_files)
+          detect <- styler::style_file(changed_r_files, dry = "on")
           if (TRUE %in% detect$changed) {
             problems <- subset(detect$file, detect$changed == T)
-            cat(paste("Styling errors found in", length(problems), "files\n"))
-            cat("Please run `styler::style_pkg()` to fix the style\n")
-            quit(status = 1)
+            cat(paste(
+              "☠ One or more files had styling errors.",
+              "Please see the log above for remediations,",
+              "or simply run the following commands",
+              "for an immediate fix:\n"
+            ))
+            cat("────────────────────────────────────────\n")
+            cat(paste0(
+              "styler::style_file(", capture.output(dput(problems)), ")\n"
+            ))
+            cat("────────────────────────────────────────\n")
+            cat("⚠️ Here is the complete git diff for the files that changed:\n")
+            system("git diff")
+            cat("────────────────────────────────────────\n")
+            cat(paste("ℹ️ Version of styler used in this workflow:", packageVersion("styler")))
+            quit(status = length(problems))
           }
         shell: Rscript {0}
-        working-directory: ${{ github.event.repository.name }}
