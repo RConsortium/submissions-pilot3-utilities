@@ -13,10 +13,18 @@ The objective of this utility package is to support the [R Consortium R submissi
  
 ## Installation
 
-You can install the development version from GitHub with:
+You can install from GitHub with:
 
-install.packages("devtools")
-devtools::install_github("RConsortium/submissions-pilot3-utilities")
+```
+install.packages("remotes")
+
+remotes::install_github(
+  repo = "RConsortium/submissions-pilot3-utilities",
+  host = "api.github.com",
+  upgrade = "never",
+  force = TRUE
+)
+```
 
 ## Learn more
 
