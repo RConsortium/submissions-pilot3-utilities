@@ -1,10 +1,5 @@
-# pilot1wrappers 0.1.1
+# pilot3 0.0.1
 
-* Address reviewer comments for `tlf-efficacy.Rmd` and `tlf-primary`.
-* Change running R version to R4.1.2
+* First release of 5 functions for use in Submission.
+* Removed redundant files and cleaned up function names.
 
-
-# pilot1wrappers 0.1.0
-
-* Added a `NEWS.md` file to track changes to the package.
-* Initial submission
