@@ -32,16 +32,6 @@ test_that("fmt_pval works", {
 })
 
 
-test_that("fmt_pval works", {
-  
-  expect_equal(fmt_pval(0.446, digits = 2), "  0.45")
-  expect_equal(fmt_pval(0.445, digits = 3), "  0.445")
-  expect_equal(fmt_pval(0.52, digits = 3), "  0.520")
-  expect_length(fmt_pval(0.445, digits = 1), 1)
-  expect_length(fmt_pval(0.445, digits = 4), 1)
-  
-})
-
 test_that("fmt_ci works", {
   
   expect_equal(fmt_ci(1, -0.25, 1.32), " 1.00 (-0.25, 1.32)")
