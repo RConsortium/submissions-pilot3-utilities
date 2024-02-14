@@ -37,7 +37,6 @@ test_that("format_sitegr1 works", {
   expect_equal(format_sitegr1("715"),  "900")
   expect_equal(format_sitegr1("717"),  "900")
   expect_length(format_sitegr1("717"), 1)
-  
 })
 
 test_that("round_sas works", {
@@ -45,5 +44,4 @@ test_that("round_sas works", {
   expect_equal(round_sas(9.06, digits = 0),  9)
   expect_equal(round_sas(-5.6, digits = 0),  -6)
   expect_length(round_sas(10.56, digits = 0), 1)
-  
 })

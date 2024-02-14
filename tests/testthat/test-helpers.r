@@ -12,7 +12,7 @@ test_that("pad_row works", {
     "TEST01", "01-701-1015", "SYSBP", "Systolic Blood Pressure (mmHg)", "WEEK 2",
     "TEST01", "01-701-1028", "DIABP", "Diastolic Blood Pressure (mmHg)", "BASELINE",
     "TEST01", "01-701-1028", "SYSBP", "Systolic Blood Pressure (mmHg)", "BASELINE"
-)
+  )
   expect_equal(nrow(pad_row(.data)),  7)
   expect_equal(nrow(pad_row(.data, n = 3)),  9)
   expect_equal(nrow(pad_row(.data, n = 5)),  11)

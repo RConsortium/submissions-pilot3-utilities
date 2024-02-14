@@ -9,6 +9,4 @@
 library(testthat)
 library(pilot3utils)
 
-
 test_check("pilot3utils")
-
