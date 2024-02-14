@@ -31,9 +31,22 @@ test_that("num_fmt works", {
   expect_length(num_fmt(5, digits = 0, size = 8, int_len = 3), 1)
 })
 
+test_that("str_pad works", {
+  expect_equal(str_pad("pilot3", 7, "left"),  " pilot3")
+  expect_length(str_pad("pilot3", 7, "left"), 1)
+})
 
+test_that("nrow works", {
+  expect_equal(nrow(matrix(1:12,3,4)),  3)
+  expect_length(nrow(matrix(1:12,3,4)), 1)
+})
 
+test_that("round works", {
+  expect_equal(round(c(.3, 1.03, 2.67, 5, 8.91), digits = 1),  c(0.3, 1.0, 2.7, 5.0, 8.9))
+  expect_length(round(c(.3, 1.03, 2.67, 5, 8.91), digits = 1),  5)
+})
 
-
-
-
+test_that("format works", {
+  expect_equal(format("GFG", width = 8, justify = "l"),  "GFG     ")
+  expect_length(format("GFG", width = 8, justify = "l"), 1)
+})
