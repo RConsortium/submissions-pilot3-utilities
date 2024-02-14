@@ -22,3 +22,4 @@ testthat_example <- function(filename) {
     mustWork = TRUE
   )
 }
+
