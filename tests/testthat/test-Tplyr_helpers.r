@@ -35,7 +35,7 @@ test_that("nest_rowlabels works", {
   expect_equal(nrow(.nest_rowlabels),  12)
   expect_equal(nrow(nest_rowlabels(.data)),  12)
   expect_s3_class(nest_rowlabels(.data), "tbl_df")
-  expect_snapshot(nest_rowlabels(.data), dplyr::pull(.nest_rowlabels))
+  expect_snapshot(nest_rowlabels(.data), dplyr::select(.nest_rowlabels))
   expect_length(nrow(.data), 1)
   expect_length(nrow(.nest_rowlabels), 1)
 })
