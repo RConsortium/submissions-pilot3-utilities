@@ -21,7 +21,7 @@ test_that("pad_row works", {
     "TEST01", "01-701-1015", "SYSBP", "Systolic Blood Pressure (mmHg)", "WEEK 2",
     "TEST01", "01-701-1028", "DIABP", "Diastolic Blood Pressure (mmHg)", "BASELINE",
     "TEST01", "01-701-1028", "SYSBP", "Systolic Blood Pressure (mmHg)", "BASELINE",
-    "","","","",""
+    "", "", "", "", ""
   )
   expect_equal(nrow(pad_row(.data)),  7)
   expect_equal(nrow(pad_row(.data, n = 3)),  9)
@@ -45,8 +45,8 @@ test_that("num_fmt works", {
 
 test_that("str_pad works", {
   .data_str_pad <- tibble::tribble(
-  ~OUTPUT,
-  " pilot3"
+    ~OUTPUT,
+    " pilot3"
   )
   expect_equal(str_pad("pilot3", 7, "left"),  " pilot3")
   expect_snapshot(str_pad("pilot3", 7, "left"),  dplyr::select(.data_str_pad))
