@@ -3,6 +3,16 @@ test_that("Pilot3 can use the testthat 3e", {
   expect_true(TRUE)
 })
 test_that("efficacy models works", {
+  #use DESCRIPTION file imports/suggests packages for pilot3utils environment
+  adas <- haven::read_xpt("./adadas.xpt")
+  adas <- adas %>%
+    filter(
+      EFFFL == "Y",
+      ITTFL == "Y",
+      PARAMCD == "ACTOT",
+      ANL01FL == "Y"
+    )
+  model_portion <- efficacy_models(adas, "CHG", 24)
   .data_model_portion <- tibble::tribble(
     ~row_label, ~`~var1_Xanomeline Low Dose`, ~`~var1_Xanomeline High Dose`,
     "p-value(Dose Response) [1][2]", "NA", "   0.245    ",
@@ -15,5 +25,12 @@ test_that("efficacy models works", {
     "  Diff of LS Means (SE)", "NA", "-0.5 (0.84)",
     "  95% CI", "NA", "(-2.2;1.1)"
   )
+  expect_equal(efficacy_models(adas, "CHG", 24), model_portion)
+  expect_snapshot(efficacy_models(adas, "CHG", 24), dplyr::select(model_portion))
+  expect_length(efficacy_models(adas, "CHG", 24), 3)
+  expect_s3_class(model_portion, "tbl_df")
+  expect_s3_class(.data_model_portion, "tbl_df")
+  expect_snapshot_value(.data_model_portion, "serialize")
+  expect_snapshot_value(model_portion, "serialize")
   expect_length(.data_model_portion, 3)
 })
