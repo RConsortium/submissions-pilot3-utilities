@@ -16,25 +16,12 @@ Imports:
     tibble,
     tidyr
 Suggests:
-    config,
-    cowplot,
-    devtools,
-    fs,
-    ggplot2,
-    haven,
     testthat (>= 3.0.0),
     knitr,
-    pharmaRTF,
-    r2rtf,
-    rtables,
     rmarkdown,
-    rprojroot,
-    sessioninfo,
-    Tplyr,
-    pkglite,
-    visR
+    haven
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)  
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
