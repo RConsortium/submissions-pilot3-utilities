@@ -1,7 +1,5 @@
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/RConsortium/submissions-pilot3-utilities/workflows/R-CMD-check/badge.svg)](https://rconsortium.github.io/submissions-pilot3-utilities/)
-
 <!-- badges: end -->
 
 ## Motivation
