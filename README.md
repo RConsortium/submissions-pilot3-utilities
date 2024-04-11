@@ -11,6 +11,8 @@ The objective of this utility package is to support the [R Consortium R submissi
  
 ## Installation
 
+The [pilot3 `renv.lock`](https://github.com/RConsortium/submissions-pilot3-adam/blob/main/renv.lock) should be used to install the dependent packages before installing this package. 
+
 You can install from GitHub with:
 
 ```
